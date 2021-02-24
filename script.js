@@ -16,7 +16,10 @@
 
 
 
-/* These are the objects. the dog, the activties users can pick, and the */
+/* These are the objects. the dog, the activties users can pick, and the
+other stuff
+
+*/
 
 const dog = {
     energy: 0,
@@ -49,8 +52,12 @@ function petDog(dog){
 };
 
 function walkDog(dog) {
+    if (dog.energy === 0) {
+        alert("Not enough energy to walk, try feeding your pet first!")
+} else {
     dog.energy = dog.energy - 1,
     dog.happiness = dog.happiness + 2
+}
 };
 
 // Initial prompt to have user enter dog's name //
@@ -60,24 +67,37 @@ console.log(petname);
 
 // Tell the user what the purpose of this application is // 
 
-explanationPrompt = prompt(`Today we are going to do some activities with ${petname}! There are three activities you can do, and you have time for six activities before your day is over. Click 'Ok' to continue.`)
+explanationPrompt = prompt(`Today we are going to do some activities with ${petname}! There are three activities you can do! You can feed your pet, pet your pet, or walk your pet. You have time for six activities before your day is over. Click 'Ok' to continue.`)
 
 /* Prompts */
 
 const activity_amount = 6;
 
-const choice = prompt("What would you like to do with your dog?");
+let choice;
+
+let check = 0;
 
 for (let activity = 0; activity < activity_amount; activity++) {
+    while (check === 0) {
+        choice = prompt("What would you like to do with your dog? Feed, pet, or walk?");
+            switch (choice){
+                case "feed": check = 1; break; 
+                case "walk": check = 1; break;
+                case "pet": check = 1; break;
+                default: alert("please pick feed pet or walk") 
+            }
+    }
+             if (choice === activities.feed){
+                feedDog(dog);
+                alert(`You fed ${petname}! They are more energetic! `);
+            } if (choice === activities.pet) {
+                petDog(dog);
+                alert(`You pet ${petname}! They are quite happy about it!`);
+            } if (choice === activities.walk) {
+                walkDog(dog);
+                alert(`You take ${petname} for a walk. They are quite happy, but a little tired!`);
+            } check = 0;
+        }
 
-    if (choice === activities.feed){
-        feedDog(dog);
-    } else if (choice === activities.pet) {
-        petDog(dog);
-    } else (choice === activities.walk) 
-        walkDog(dog);
-}
-
-document.write("Your pet "+ petname + " has a total energy of " + energy + " and a happiness level of " + happiness);
-
+document.write(petname + " has " + dog.happiness + " happiness and " + dog.energy + " energy.");
 
